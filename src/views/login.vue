@@ -86,14 +86,14 @@
             </v-btn>
           </v-form>
           <div class="text-center mt-4">
-            Don’t have an account?
-            <RouterLink to="/register">Register</RouterLink>
+            Belum punya account?
+            <RouterLink to="/register">Registrasi disini</RouterLink>
           </div>
 
           <div class="d-flex justify-center mt-10">
-            <v-icon size="36" class="mx-3">mdi-gmail</v-icon>
-            <v-icon size="36" class="mx-3">mdi-facebook</v-icon>
-            <v-icon size="36" class="mx-3">mdi-linkedin</v-icon>
+            <v-icon size="36" class="mx-3" style="cursor: pointer;">mdi-gmail</v-icon>
+            <v-icon size="36" class="mx-3" style="cursor: pointer;">mdi-facebook</v-icon>
+            <v-icon size="36" class="mx-3" style="cursor: pointer;">mdi-linkedin</v-icon>
           </div>
         </v-card>
       </v-col>

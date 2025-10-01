@@ -31,7 +31,7 @@
         class="d-flex align-center justify-center"
       >
         <v-card width="400vh" height="100vh" class="pa-8" elevation="8" rounded="md">
-          <v-card-title class="text-h3 text-center" style="margin-top: 17vh; font-weight: bold;" >Sign in</v-card-title>
+          <v-card-title class="text-h3 text-center" style="margin-top: 9vh; font-weight: bold;" >Sign in</v-card-title>
           <v-alert v-if="error" 
           type="error" 
           style="width: 98%; border-radius: 20px;"
@@ -61,7 +61,7 @@
             />
           </div>
           <div>
-            <h3 class="pa-1 mt-10">Password</h3>
+            <h3 class="pa-1 mt-7">Password</h3>
             <v-text-field
               variant="text"
               density="comfortable"
@@ -73,21 +73,27 @@
               required
             />
           </div>
+          <v-switch label="Ingatkan saya" inset color="green" class="mt-3 pa-1 ml-1"></v-switch>
             <v-btn
               style="border-radius: 15px; height: 6vh;"
               type="submit"
               color="primary"
               block
-              class="mt-10"
+              class="mt-3"
               :loading="loading"
             >
               Login
             </v-btn>
           </v-form>
-
           <div class="text-center mt-4">
             Don’t have an account?
             <RouterLink to="/register">Register</RouterLink>
+          </div>
+
+          <div class="d-flex justify-center mt-10">
+            <v-icon size="36" class="mx-3">mdi-gmail</v-icon>
+            <v-icon size="36" class="mx-3">mdi-facebook</v-icon>
+            <v-icon size="36" class="mx-3">mdi-linkedin</v-icon>
           </div>
         </v-card>
       </v-col>

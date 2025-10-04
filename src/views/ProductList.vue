@@ -1,24 +1,53 @@
 <template>
   <v-app style="background-color: #fff;">
-    <!-- 🔶 Navbar -->
     <Navbar />
 
     <v-main>
       <!-- 🧭 Carousel Banner -->
-      <v-container fluid class="pa-0">
+  <v-container fluid class="pa-0">
     <v-carousel
       cycle
-      height="320"
+      height="340"
       hide-delimiter-background
       show-arrows="hover"
-      interval="4000"
     >
-      <v-carousel-item
-        v-for="(banner, i) in banners"
-        :key="i"
-        :src="banner"
-        cover
-      ></v-carousel-item>
+      <!-- Carousel item -->
+      <v-carousel-item>
+        <v-row no-gutters>
+          <!-- Gambar besar kiri -->
+          <v-col cols="8" class="ml-3" >
+            <v-img
+              src="/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg"
+              alt="Banner utama"
+              height="340"
+              width="80%"
+              cover
+            ></v-img>
+          </v-col>
+
+          <!-- Dua gambar kecil kanan -->
+          <v-col cols="4">
+            <v-row no-gutters>
+              <v-col cols="12">
+                <v-img
+                  src="/id-11134258-7rbk7-m71zp300x3zwda@resize_w796_nl.jpg"
+                  alt="Banner kecil atas"
+                  height="170"
+                  cover
+                ></v-img>
+              </v-col>
+              <v-col cols="12">
+                <v-img
+                  src="@/assets/banner3.png"
+                  alt="Banner kecil bawah"
+                  height="170"
+                  cover
+                ></v-img>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-carousel-item>
     </v-carousel>
   </v-container>
 
@@ -107,13 +136,13 @@ import { ref, onMounted } from "vue";
 import api from "@/plugins/axios";
 import Navbar from "@/components/Navbar.vue";
 import banner1 from "/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg";
-// import banner2 from "@/assets/banner2.jpg";
+import banner2 from "/id-11134258-7rbk7-m71zp300x3zwda@resize_w796_nl.jpg";
 // import banner3 from "@/assets/banner3.jpg";
 
 const products = ref([]);
 
 // 🧩 Banner Carousel
-const banners =ref([banner1]);
+const banners =ref([banner1, banner2]);
 // 🏷️ Kategori
 const categories = ref([
   { name: "Pakaian", icon: "https://cdn-icons-png.flaticon.com/512/892/892458.png" },

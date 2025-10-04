@@ -31,7 +31,7 @@
         class="d-flex align-center justify-center"
       >
         <v-card width="400vh" height="100vh" class="pa-8" elevation="8" rounded="md">
-          <v-card-title class="text-h3 text-center" style="margin-top: 9vh; font-weight: bold;" >Sign in</v-card-title>
+          <v-card-title class="text-h3 text-center" style="margin-top: 6vh; font-weight: bold;" >Sign in</v-card-title>
           <v-alert v-if="error" 
           type="error" 
           style="width: 98%; border-radius: 20px;"
@@ -80,8 +80,7 @@
               color="primary"
               block
               class="mt-3"
-              :loading="loading"
-            >
+              :loading="loading">
               Login
             </v-btn>
           </v-form>
@@ -89,7 +88,11 @@
             Belum punya account?
             <RouterLink to="/register">Registrasi disini</RouterLink>
           </div>
-
+          <v-row class="align-center my-4">
+            <v-col><v-divider></v-divider></v-col>
+            <v-col class="shrink text-center">Or continue with</v-col>
+            <v-col><v-divider></v-divider></v-col>
+          </v-row>
           <div class="d-flex justify-center mt-10">
             <v-icon size="36" class="mx-3" style="cursor: pointer;">mdi-gmail</v-icon>
             <v-icon size="36" class="mx-3" style="cursor: pointer;">mdi-facebook</v-icon>

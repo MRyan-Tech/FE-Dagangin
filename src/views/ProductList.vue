@@ -1,60 +1,130 @@
 <template>
-  <v-layout>
-    <!-- Navbar -->
-    <Navbar @toggle-drawer="drawer = !drawer" />
-
-    <!-- Drawer -->
-    <v-navigation-drawer
-      v-if="$vuetify.display.smAndDown"
-      v-model="drawer"
-      location="top"
-      temporary
-      width="355"
-    >
-      <v-list>
-        <v-list-item link prepend-icon="mdi-home-outline" title="Dashboard" />
-        <v-list-item link prepend-icon="mdi-calendar" title="Calendar" />
-      </v-list>
-    </v-navigation-drawer>
+  <v-app style="background-color: #fff;">
+    <!-- 🔶 Navbar -->
+    <Navbar />
 
     <v-main>
-      <v-row>
-        <v-col cols="12" class="text-center mb-6">
-          <h2 class="text-h4 font-weight-bold">Product List</h2>
-        </v-col>
+      <!-- 🧭 Carousel Banner -->
+      <v-container fluid class="pa-0">
+    <v-carousel
+      cycle
+      height="320"
+      hide-delimiter-background
+      show-arrows="hover"
+      interval="4000"
+    >
+      <v-carousel-item
+        v-for="(banner, i) in banners"
+        :key="i"
+        :src="banner"
+        cover
+      ></v-carousel-item>
+    </v-carousel>
+  </v-container>
 
-        <v-col
-          v-for="product in products"
-          :key="product.pd_id"
-          cols="12"
-          sm="6"
-          md="4"
-        >
-          <v-card class="pa-4">
-            <v-card-title>{{ product.pd_name }}</v-card-title>
-            <v-card-subtitle>Code: {{ product.pd_code }}</v-card-subtitle>
-            <v-card-text>
-              <p>Price: Rp {{ product.pd_price.toLocaleString() }}</p>
-              <p v-if="product.category">Category: {{ product.category.ct_name }}</p>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="primary" @click="orderProduct(product)">Order</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
+      <!-- 🏷️ Kategori -->
+      <v-container class="mt-8">
+        <h3 class="text-h5 font-weight-bold mb-6 text-center">
+          Kategori Populer
+        </h3>
+        <v-row justify="center">
+          <v-col
+            v-for="(cat, i) in categories"
+            :key="i"
+            cols="4"
+            sm="2"
+            md="1"
+            class="text-center"
+          >
+            <v-avatar size="72" class="mb-2 elevation-2">
+              <v-img :src="cat.icon" alt="Kategori" />
+            </v-avatar>
+            <p class="text-caption font-weight-medium mt-1">
+              {{ cat.name }}
+            </p>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-divider class="my-8"></v-divider>
+
+      <!-- 🛍️ Produk -->
+      <v-container>
+        <h3 class="text-h5 font-weight-bold mb-6 text-center">
+          Produk Terbaru
+        </h3>
+
+        <v-row>
+          <v-col
+            v-for="product in products"
+            :key="product.pd_id"
+            cols="6"
+            sm="4"
+            md="2"
+          >
+            <v-card
+              elevation="2"
+              class="rounded-lg hover:shadow-lg transition-all"
+            >
+              <v-img
+                :src="product.image || 'https://via.placeholder.com/300'"
+                height="160"
+                cover
+              ></v-img>
+
+              <v-card-text class="pa-3">
+                <div
+                  class="text-subtitle-2 font-weight-medium text-truncate"
+                  :title="product.pd_name"
+                >
+                  {{ product.pd_name }}
+                </div>
+                <div class="text-orange-darken-3 font-weight-bold mt-1">
+                  Rp {{ product.pd_price.toLocaleString() }}
+                </div>
+              </v-card-text>
+
+              <v-card-actions class="justify-center pb-3">
+                <v-btn
+                  color="primary"
+                  size="small"
+                  rounded
+                  @click="orderProduct(product)"
+                >
+                  Beli Sekarang
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
-  </v-layout>
+  </v-app>
 </template>
 
 <script setup>
-import { ref, onMounted, shallowRef } from "vue";
+import { ref, onMounted } from "vue";
 import api from "@/plugins/axios";
-import Navbar from "@/components/navbar.vue"; // << panggil komponen
+import Navbar from "@/components/Navbar.vue";
+import banner1 from "/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg";
+// import banner2 from "@/assets/banner2.jpg";
+// import banner3 from "@/assets/banner3.jpg";
 
-const drawer = shallowRef(false);
 const products = ref([]);
 
+// 🧩 Banner Carousel
+const banners =ref([banner1]);
+// 🏷️ Kategori
+const categories = ref([
+  { name: "Pakaian", icon: "https://cdn-icons-png.flaticon.com/512/892/892458.png" },
+  { name: "Elektronik", icon: "https://cdn-icons-png.flaticon.com/512/1041/1041373.png" },
+  { name: "Aksesoris", icon: "https://cdn-icons-png.flaticon.com/512/1642/1642394.png" },
+  { name: "Kecantikan", icon: "https://cdn-icons-png.flaticon.com/512/1040/1040230.png" },
+  { name: "Hobi", icon: "https://cdn-icons-png.flaticon.com/512/1611/1611179.png" },
+  { name: "Rumah Tangga", icon: "https://cdn-icons-png.flaticon.com/512/1514/1514935.png" },
+]);
+
+// 📦 Ambil data produk dari API
 const fetchProducts = async () => {
   try {
     const res = await api.get("/products");
@@ -65,7 +135,22 @@ const fetchProducts = async () => {
 };
 onMounted(fetchProducts);
 
+// 🛒 Fungsi order
 const orderProduct = (product) => {
   console.log("Order product:", product);
 };
 </script>
+
+<style scoped>
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v-card:hover {
+  transform: scale(1.03);
+}
+</style>

@@ -1,48 +1,34 @@
 <template>
   <v-app style="background-color: #fff;">
     <Navbar />
-
     <v-main>
       <!-- 🧭 Carousel Banner -->
       <v-container class="pa-0">
-  <v-carousel height="340" show-arrows="hover">
-    <v-carousel-item>
-      <v-sheet class="d-flex" height="340">
-        <!-- Gambar besar kiri -->
-        <v-col cols="8">
-          <v-img
-            src="/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg"
-            alt="Banner utama"
-            height="340"
-            cover
-          ></v-img>
-        </v-col>
-
-        <!-- Dua gambar kecil kanan -->
-        <v-col cols="4">
-          <v-row no-gutters>
-            <v-col cols="12">
+        <v-carousel height="340" hide-delimiters show-arrows="hover">
+        <v-carousel-item>
+          <div class="d-flex" style="height:340px;">
+            <v-img
+              src="/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg"
+              style="width: 70%;"
+              cover
+            />
+            <div class="d-flex flex-column" style="width:30%;">
               <v-img
                 src="/id-11134258-7rbk7-m71zp300x3zwda@resize_w796_nl.jpg"
-                alt="Banner kecil atas"
                 height="170"
                 cover
-              ></v-img>
-            </v-col>
-            <v-col cols="12">
+              />
               <v-img
                 src="/id-11134258-7rbk7-masco4vng1w296@resize_w796_nl.jpg"
-                alt="Banner kecil bawah"
                 height="170"
                 cover
-              ></v-img>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
-</v-container>
+              />
+            </div>
+          </div>
+        </v-carousel-item>
+      </v-carousel>
+
+      </v-container>
 
 
       <!-- 🏷️ Kategori -->
@@ -123,12 +109,14 @@
       </v-container>
     </v-main>
   </v-app>
+  <Footer />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import api from "@/plugins/axios";
 import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 import banner1 from "/id-11134258-7ra0j-mbes592yn87z81@resize_w1594_nl.jpg";
 import banner2 from "/id-11134258-7rbk7-m71zp300x3zwda@resize_w796_nl.jpg";
 // import banner3 from "@/assets/banner3.jpg";

@@ -43,17 +43,17 @@
             <div class="d-flex flex-wrap justify-end">
               <v-img
                 src="/appstore.jpg"
-                width="120"
+                width="100"
                 class="ma-1"
               ></v-img>
               <v-img
                 src="/playstore.jpg"
-                width="120"
+                width="100"
                 class="ma-1"
               ></v-img>
               <v-img
                 src="appgalery.jpg"
-                width="120"
+                width="100"
                 class="ma-1"
               ></v-img>
             </div>

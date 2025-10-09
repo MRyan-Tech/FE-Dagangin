@@ -73,25 +73,39 @@
           >
             <v-card
               elevation="2"
+              
               class="rounded-lg hover:shadow-lg transition-all"
             >
               <v-img
                 :src="product.image || 'https://via.placeholder.com/300'"
-                height="160"
+                height="auto"
                 cover
               ></v-img>
 
               <v-card-text class="pa-3">
-                <div
-                  class="text-subtitle-2 font-weight-medium text-truncate"
-                  :title="product.pd_name"
-                >
-                  {{ product.pd_name }}
-                </div>
-                <div class="text-orange-darken-3 font-weight-bold mt-1">
-                  Rp {{ product.pd_price.toLocaleString() }}
-                </div>
-              </v-card-text>
+  <!-- Gambar Produk -->
+  <v-img
+    :src="product.pd_image"
+    alt="Product Image"
+    height="100"
+    class="rounded-lg mb-3"
+    cover
+  ></v-img>
+
+  <!-- Nama Produk -->
+  <div
+    class="text-subtitle-2 font-weight-medium text-truncate"
+    :title="product.pd_name"
+  >
+    {{ product.pd_name }}
+  </div>
+
+  <!-- Harga Produk -->
+  <div class="text-orange-darken-3 font-weight-bold mt-1">
+    Rp {{ product.pd_price.toLocaleString() }}
+  </div>
+</v-card-text>
+
 
               <v-card-actions class="justify-center pb-3">
                 <v-btn
@@ -109,7 +123,7 @@
       </v-container>
     </v-main>
   </v-app>
-  <Footer />
+  <Footer/>
 </template>
 
 <script setup>

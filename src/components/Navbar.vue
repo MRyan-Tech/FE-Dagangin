@@ -1,36 +1,36 @@
 <template>
   <div class="mt-10" fixed>
-<v-sheet
-  color="primary"
-  class="py-1 px-6 text-white text-caption"
-  style="position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;"
->
-  <v-row justify="space-between" align="center" no-gutters>
+    <!-- 🔹 Top Bar -->
+    <v-sheet
+      color="primary"
+      class="py-1 px-6 text-white text-caption"
+      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;"
+    >
+      <v-row justify="space-between" align="center" no-gutters>
+        <v-col cols="auto" class="d-flex gap-4">
+          <span>Download App |</span>
+          <span>Bantuan |</span>
+          <span>Tentang Kami |</span>
+          <span>Bahasa Indonesia |</span>
+          <span>
+            ikuti kami di
+            <v-icon class="ml-1">mdi-linkedin</v-icon>
+            <v-icon class="ml-1">mdi-facebook</v-icon>
+            <v-icon class="ml-1">mdi-instagram</v-icon>
+            <v-icon class="ml-1">mdi-twitter</v-icon>
+          </span>
+        </v-col>
+      </v-row>
+    </v-sheet>
 
-    <v-col cols="auto" class="d-flex gap-4">
-      <span>Download App |</span>
-      <span>Bantuan |</span>
-      <span>Tentang Kami |</span>
-      <span>Bahasa Indonesia |</span>
-      <span>ikuti kami di
-        <v-icon class="ml-1">mdi-linkedin</v-icon>
-        <v-icon class="ml-1">mdi-facebook</v-icon>
-        <v-icon class="ml-1">mdi-instagram</v-icon>
-        <v-icon class="ml-1">mdi-twitter</v-icon>
-
-      </span>
-    </v-col>
-  </v-row>
-</v-sheet>
-
-<v-app-bar
-  color="primary"
-  flat
-  height="70"
-  class="px-6 d-flex align-center shadow-sm" 
-  style="margin-top: 28px; z-index: 1000;"
->
-
+    <!-- 🔹 Main Navbar -->
+    <v-app-bar
+      color="primary"
+      flat
+      height="70"
+      class="px-6 d-flex align-center shadow-sm"
+      style="margin-top: 28px; z-index: 1000;"
+    >
       <!-- 🛍️ Logo -->
       <v-btn to="/" variant="text" class="pa-0">
         <v-img src="/logo.png" contain height="40" />
@@ -46,9 +46,9 @@
         rounded
         prepend-inner-icon="mdi-magnify"
         @keyup.enter="handleSearch"
-        style="background-color: white;  
-        color: #757575 !important;
-        border-radius: 20px;"
+        style="background-color: white;
+               color: #757575 !important;
+               border-radius: 20px;"
       ></v-text-field>
 
       <!-- ❤️ Wishlist -->
@@ -63,38 +63,95 @@
 
       <!-- 🔐 Auth -->
       <div class="d-flex align-center ml-4">
-        <v-btn
-          to="/login"
-          color="white"
-          variant="flat"
-          class="text-capitalize mr-2"
-        >
-          Login
-        </v-btn>
-        <v-btn
-          to="/register"
-          color="white"
-          variant="flat"
-          class="text-capitalize"
-        >
-          Daftar
-        </v-btn>
+        <!-- Jika belum login -->
+        <template v-if="!isLoggedIn">
+          <v-btn
+            to="/login"
+            color="white"
+            variant="flat"
+            class="text-capitalize mr-2"
+          >
+            Login
+          </v-btn>
+          <v-btn
+            to="/register"
+            color="white"
+            variant="flat"
+            class="text-capitalize"
+          >
+            Daftar
+          </v-btn>
+        </template>
+
+        <!-- Jika sudah login -->
+        <template v-else>
+          <v-menu offset-y>
+            <template #activator="{ props }">
+              <v-btn icon v-bind="props">
+                <v-avatar size="32" color="white">
+                  <v-icon color="primary">mdi-account-circle</v-icon>
+                </v-avatar>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>Hallo,  {{ user.us_name }}</v-list-item-title>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item @click="goToProfile">
+                <v-list-item-title>My Profile</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="logout">
+                <v-list-item-title>Sign out</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
       </div>
     </v-app-bar>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const search = ref("");
 
+// 🔹 State login
+const isLoggedIn = ref(false);
+const user = ref({ us_name: "User" });
+
+// 🔍 Pencarian produk
 const handleSearch = () => {
   if (search.value.trim() !== "") {
     router.push({ path: "/search", query: { q: search.value } });
   }
+};
+
+// 🔹 Cek login dari localStorage
+onMounted(() => {
+  const token = localStorage.getItem("token");
+  const userData = localStorage.getItem("user");
+
+  if (token && userData) {
+    isLoggedIn.value = true;
+    user.value = JSON.parse(userData);
+  }
+});
+
+// 🔹 Logout
+const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  isLoggedIn.value = false;
+  router.push("/login");
+};
+
+// 🔹 Pergi ke profil
+const goToProfile = () => {
+  router.push("/profile");
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <v-app style="background-color: #fff;">
     <Navbar />
-    <v-main>
+    <v-main class="mt-2">
       <!-- 🧭 Carousel Banner -->
       <v-container class="pa-0">
         <v-carousel height="340" hide-delimiters show-arrows="hover">

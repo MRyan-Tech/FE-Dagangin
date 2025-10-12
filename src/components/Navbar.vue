@@ -7,11 +7,10 @@
       style="position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;"
     >
       <v-row justify="space-between" align="center" no-gutters>
+        <!-- 🔸 Kiri -->
         <v-col cols="auto" class="d-flex gap-4">
           <span>Download App |</span>
-          <span>Bantuan |</span>
           <span>Tentang Kami |</span>
-          <span>Bahasa Indonesia |</span>
           <span>
             ikuti kami di
             <v-icon class="ml-1">mdi-linkedin</v-icon>
@@ -19,6 +18,55 @@
             <v-icon class="ml-1">mdi-instagram</v-icon>
             <v-icon class="ml-1">mdi-twitter</v-icon>
           </span>
+        </v-col>
+
+        <!-- 🔸 Kanan (Bahasa + Akun/Login) -->
+        <v-col cols="auto" class="d-flex align-center gap-4">
+          <!-- Bahasa -->
+          <span><v-icon size="16" class="mr-1">mdi-translate</v-icon>
+            Bahasa Indonesia |</span>
+          <span class="d-flex align-center"><v-icon size="16" class="mr-1">mdi-phone</v-icon>
+            Bantuan |</span>
+          <span class="d-flex align-center">
+            <v-icon size="16" class="mr-1">mdi-bell</v-icon>
+            Notifikasi |
+          </span>
+
+
+          <!-- Jika belum login -->
+          <template v-if="!isLoggedIn">
+            <v-btn to="/login" color="white" variant="text" class="text-capitalize mr-2" style="background-color: cornflowerblue;">
+              Login
+            </v-btn>
+            <v-btn to="/register" color="white" variant="text" class="text-capitalize" style="background-color: cornflowerblue;">
+              Daftar
+            </v-btn>
+          </template>
+
+          <!-- Jika sudah login -->
+          <template v-else>
+            <v-menu offset-y>
+              <template #activator="{ props }">
+                <v-btn icon v-bind="props">
+                  <v-avatar size="24" color="white">
+                    <v-icon color="primary">mdi-account-circle</v-icon>
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title>Hallo, {{ user.us_name }}</v-list-item-title>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item @click="goToProfile">
+                  <v-list-item-title>My Profile</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="logout">
+                  <v-list-item-title>Sign out</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
         </v-col>
       </v-row>
     </v-sheet>
@@ -29,7 +77,7 @@
       flat
       height="70"
       class="px-6 d-flex align-center shadow-sm"
-      style="margin-top: 28px; z-index: 1000;"
+      style="margin-top: 40px; z-index: 1000;"
     >
       <!-- 🛍️ Logo -->
       <v-btn to="/" variant="text" class="pa-0">
@@ -41,7 +89,7 @@
         v-model="search"
         placeholder="Cari produk, merek, dan toko"
         density="compact"
-        class="mx-6 flex-grow-1 search-box"
+        class="mx-6 flex-grow-2 search-box"
         hide-details
         rounded
         prepend-inner-icon="mdi-magnify"
@@ -60,54 +108,6 @@
       <v-btn icon>
         <v-icon color="white-darken-1">mdi-cart-outline</v-icon>
       </v-btn>
-
-      <!-- 🔐 Auth -->
-      <div class="d-flex align-center ml-4">
-        <!-- Jika belum login -->
-        <template v-if="!isLoggedIn">
-          <v-btn
-            to="/login"
-            color="white"
-            variant="flat"
-            class="text-capitalize mr-2"
-          >
-            Login
-          </v-btn>
-          <v-btn
-            to="/register"
-            color="white"
-            variant="flat"
-            class="text-capitalize"
-          >
-            Daftar
-          </v-btn>
-        </template>
-
-        <!-- Jika sudah login -->
-        <template v-else>
-          <v-menu offset-y>
-            <template #activator="{ props }">
-              <v-btn icon v-bind="props">
-                <v-avatar size="32" color="white">
-                  <v-icon color="primary">mdi-account-circle</v-icon>
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Hallo,  {{ user.us_name }}</v-list-item-title>
-              </v-list-item>
-              <v-divider></v-divider>
-              <v-list-item @click="goToProfile">
-                <v-list-item-title>My Profile</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="logout">
-                <v-list-item-title>Sign out</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </template>
-      </div>
     </v-app-bar>
   </div>
 </template>

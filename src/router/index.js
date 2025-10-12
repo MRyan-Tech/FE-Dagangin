@@ -5,9 +5,14 @@ import ProductList from "@/views/ProductList.vue";
 import Orders from "@/views/Orders.vue";
 
 const routes = [
-  { path: "/", component: ProductList, meta: { requiresAuth: true } },
+  // 🔹 Semua orang bisa lihat halaman produk
+  { path: "/", component: ProductList },
+
+  // 🔹 Halaman login dan register
   { path: "/login", component: Login },
   { path: "/register", component: Register },
+
+  // 🔹 Hanya user login yang bisa akses Orders
   { path: "/orders", component: Orders, meta: { requiresAuth: true } },
 ];
 
@@ -16,9 +21,10 @@ const router = createRouter({
   routes,
 });
 
-// Middleware auth
+// 🔐 Middleware auth
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
+
   if (to.meta.requiresAuth && !token) {
     next("/login");
   } else {
@@ -27,4 +33,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-

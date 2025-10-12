@@ -87,7 +87,7 @@
   <v-img
     :src="product.pd_image"
     alt="Product Image"
-    height="100"
+    height="180"
     class="rounded-lg mb-3"
     cover
   ></v-img>
